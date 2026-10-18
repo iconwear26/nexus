@@ -59,8 +59,8 @@ export const LeadIntakeModal: React.FC<LeadIntakeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-backdrop backdrop-blur-md animate-fadeIn">
-      <div className="glass-panel-elevated rounded-2xl max-w-xl w-full p-5 sm:p-8 border-slate-700 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop backdrop-blur-md animate-fadeIn">
+      <div className="glass-panel-elevated rounded-2xl max-w-xl w-full p-6 sm:p-8 border-slate-700 shadow-2xl relative">
         {/* Close Button */}
         <button
           onClick={onClose}

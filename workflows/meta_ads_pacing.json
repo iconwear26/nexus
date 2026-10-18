@@ -1,0 +1,151 @@
+{
+  "name": "NexusFlow - Meta Ads Real-Time Pacing & Fatigue Guard",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "c1f7a18b-5e43-4f92-9b26-a0e28f7d9001",
+      "name": "Cron Trigger (Every 15m)",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v19.0/act_{{ $env.META_AD_ACCOUNT_ID }}/insights",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "queryParameters": {
+            "parameters": [
+              { "name": "fields", "value": "ad_id,ad_name,spend,frequency,ctr,cpc,roas,reach" },
+              { "name": "date_preset", "value": "today" },
+              { "name": "time_increment", "value": "1" }
+            ]
+          }
+        }
+      },
+      "id": "d2a8b29c-6f54-5a03-ac37-b1f39e8e0002",
+      "name": "Fetch Meta Insights",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst fatiguedAds = [];\nconst winningAdSets = [];\n\nfor (const item of items) {\n  const data = item.json;\n  const frequency = parseFloat(data.frequency || 0);\n  const ctr = parseFloat(data.ctr || 0);\n  const roas = parseFloat(data.roas || 0);\n  \n  if (frequency > 3.2 && ctr < 1.2) {\n    fatiguedAds.push({\n      adId: data.ad_id,\n      adName: data.ad_name,\n      frequency,\n      ctr,\n      spendToday: data.spend\n    });\n  }\n  \n  if (roas >= 4.0) {\n    winningAdSets.push({\n      adSetId: data.ad_id,\n      currentRoas: roas,\n      spendToday: data.spend\n    });\n  }\n}\n\nreturn [{\n  json: {\n    timestamp: new Date().toISOString(),\n    fatiguedAdsCount: fatiguedAds.length,\n    fatiguedAds,\n    winningAdSetsCount: winningAdSets.length,\n    winningAdSets,\n    requiresRefresh: fatiguedAds.length > 0\n  }\n}];"
+      },
+      "id": "e3b9c30d-7a65-6b14-bd48-c2a40f9f0003",
+      "name": "Analyze Creative Fatigue & ROAS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.requiresRefresh }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "f4cae41e-8b76-7c25-ce59-d3b51a0a0004",
+      "name": "Fatigue Detected?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={{ $env.GEMINI_API_KEY }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\n      \"text\": \"Generate 3 high-converting ad hooks and replacement primary copy for fatigued ad: \" + $json.fatiguedAds[0].adName + \". Current CTR dropped to \" + $json.fatiguedAds[0].ctr + \"%. Provide 3 distinct psychological angles (Problem-Agitation, Social Proof, Direct Benefit).\"\n    }]\n  }]\n}"
+      },
+      "id": "a5dbf52f-9c87-8d36-df60-e4c62b1b0005",
+      "name": "Gemini Copy Refresh",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v19.0/act_{{ $env.META_AD_ACCOUNT_ID }}/adsets",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "daily_budget", "value": "={{ Math.round($node['Analyze Creative Fatigue & ROAS'].json.winningAdSets[0].spendToday * 1.25 * 100) }}" }
+          ]
+        }
+      },
+      "id": "b6ec0630-0d98-9e47-e071-f5d73c2c0006",
+      "name": "Rebalance Budget to Winners",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL || 'https://httpbin.org/post' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"⚡ *NexusFlow Meta Optimizer Alert*\\nBudget rebalanced: shifted spend from fatigued ad to top performer. Fresh Gemini copy variants queued.\"\n}"
+      },
+      "continueOnFail": true,
+      "id": "c7fd1741-1ea9-0f58-f182-06e84d3d0007",
+      "name": "Slack Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "Cron Trigger (Every 15m)": {
+      "main": [
+        [{ "node": "Fetch Meta Insights", "type": "main", "index": 0 }]
+      ]
+    },
+    "Fetch Meta Insights": {
+      "main": [
+        [{ "node": "Analyze Creative Fatigue & ROAS", "type": "main", "index": 0 }]
+      ]
+    },
+    "Analyze Creative Fatigue & ROAS": {
+      "main": [
+        [{ "node": "Fatigue Detected?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Fatigue Detected?": {
+      "main": [
+        [{ "node": "Gemini Copy Refresh", "type": "main", "index": 0 }],
+        [{ "node": "Rebalance Budget to Winners", "type": "main", "index": 0 }]
+      ]
+    },
+    "Gemini Copy Refresh": {
+      "main": [
+        [{ "node": "Slack Alert", "type": "main", "index": 0 }]
+      ]
+    },
+    "Rebalance Budget to Winners": {
+      "main": [
+        [{ "node": "Slack Alert", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" }
+}

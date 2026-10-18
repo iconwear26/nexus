@@ -1,0 +1,29 @@
+[
+  {
+    "id": "idx-1",
+    "url": "https://novawear.co/collections/aeroflex-activewear",
+    "domain": "novawear.co",
+    "submittedAt": "2026-10-18T08:26:47.294Z",
+    "status": "indexed",
+    "googlebotResponseCode": 200,
+    "inspectionLatencyMs": 142
+  },
+  {
+    "id": "idx-2",
+    "url": "https://novawear.co/guides/breathable-running-gear-2026",
+    "domain": "novawear.co",
+    "submittedAt": "2026-10-18T05:26:47.294Z",
+    "status": "indexed",
+    "googlebotResponseCode": 200,
+    "inspectionLatencyMs": 168
+  },
+  {
+    "id": "idx-3",
+    "url": "https://cloudmetrics.io/compare/cloudmetrics-vs-datadog",
+    "domain": "cloudmetrics.io",
+    "submittedAt": "2026-10-17T22:26:47.294Z",
+    "status": "crawled",
+    "googlebotResponseCode": 200,
+    "inspectionLatencyMs": 195
+  }
+]

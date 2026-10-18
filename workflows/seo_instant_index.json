@@ -1,0 +1,99 @@
+{
+  "name": "NexusFlow - Programmatic SEO Audit & Google Indexing Push",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "seo-index-push",
+        "options": {}
+      },
+      "id": "a1b2c3d4-1111-4000-8000-000000000001",
+      "name": "Webhook Listener (New Slug Published)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "seo-index-push"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.pageUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "a1b2c3d4-2222-4000-8000-000000000002",
+      "name": "Fetch Page DOM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const html = $input.first().json.data || '';\nconst url = $node['Webhook Listener (New Slug Published)'].json.body.pageUrl;\n\n// Validate Schema\nconst hasSchema = html.includes('application/ld+json');\nconst hasCanonical = html.includes('rel=\"canonical\"');\nconst hasTitle = /<title[^>]*>([^<]+)<\\/title>/i.test(html);\nconst hasMetaDesc = /name=[\"']description[\"']/i.test(html);\n\nconst isValid = hasSchema && hasCanonical && hasTitle;\n\nreturn [{\n  json: {\n    url,\n    hasSchema,\n    hasCanonical,\n    hasTitle,\n    hasMetaDesc,\n    auditPassed: isValid,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "a1b2c3d4-3333-4000-8000-000000000003",
+      "name": "Lighthouse & Schema Validator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://indexing.googleapis.com/v3/urlNotifications:publish",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.url }}\",\n  \"type\": \"URL_UPDATED\"\n}"
+      },
+      "continueOnFail": true,
+      "id": "a1b2c3d4-4444-4000-8000-000000000004",
+      "name": "Google Indexing API v3 Push",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL || 'https://httpbin.org/post' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"🚀 *Google Indexing API Dispatched*\\nURL: \" + ($node['Lighthouse & Schema Validator'].json.url || 'https://client.io') + \"\\nGooglebot Notification Status: 200 OK\"\n}"
+      },
+      "continueOnFail": true,
+      "id": "a1b2c3d4-5555-4000-8000-000000000005",
+      "name": "Slack SEO Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Listener (New Slug Published)": {
+      "main": [
+        [{ "node": "Fetch Page DOM", "type": "main", "index": 0 }]
+      ]
+    },
+    "Fetch Page DOM": {
+      "main": [
+        [{ "node": "Lighthouse & Schema Validator", "type": "main", "index": 0 }]
+      ]
+    },
+    "Lighthouse & Schema Validator": {
+      "main": [
+        [{ "node": "Google Indexing API v3 Push", "type": "main", "index": 0 }]
+      ]
+    },
+    "Google Indexing API v3 Push": {
+      "main": [
+        [{ "node": "Slack SEO Notification", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" }
+}

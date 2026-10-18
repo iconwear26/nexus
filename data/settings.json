@@ -1,0 +1,8 @@
+{
+  "n8nWebhookUrl": "http://localhost:5678/webhook/inbound-lead",
+  "slackWebhookUrl": "",
+  "discordWebhookUrl": "",
+  "telegramChatId": "",
+  "geminiApiKey": "",
+  "autoRebalanceEnabled": true
+}

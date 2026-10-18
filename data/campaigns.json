@@ -1,0 +1,38 @@
+[
+  {
+    "id": "adset-108",
+    "clientId": "novawear",
+    "name": "Ad Set #108 (Broad Scale Advantage+)",
+    "dailyBudget": 1250,
+    "roas": 4.6,
+    "frequency": 1.82,
+    "status": "active",
+    "pacingStatus": "scaling",
+    "lastAction": "Scaled budget +25% automatically due to 4.6x ROAS headroom",
+    "lastUpdated": "2026-10-18T10:26:47.294Z"
+  },
+  {
+    "id": "adset-214",
+    "clientId": "novawear",
+    "name": "Ad Set #214 (Dynamic Catalog Retargeting)",
+    "dailyBudget": 905,
+    "roas": 5.2,
+    "frequency": 2.94,
+    "status": "active",
+    "pacingStatus": "scaling",
+    "lastAction": "Received +$105/day shifted from fatigued campaigns",
+    "lastUpdated": "2026-10-18T10:26:47.294Z"
+  },
+  {
+    "id": "adset-104",
+    "clientId": "novawear",
+    "name": "Ad Set #104 (Lookalike 1% Top Buyers)",
+    "dailyBudget": 245,
+    "roas": 2.1,
+    "frequency": 3.84,
+    "status": "fatigued",
+    "pacingStatus": "rebalanced",
+    "lastAction": "Trimmed $105/day to prevent fatigue leakage",
+    "lastUpdated": "2026-10-18T10:26:47.294Z"
+  }
+]

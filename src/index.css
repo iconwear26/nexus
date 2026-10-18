@@ -1,0 +1,411 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    background-color: #070b14;
+    color: #f1f5f9;
+    letter-spacing: -0.011em;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+}
+
+/* ========================================================================= */
+/* Base Dark Mode Glassmorphism & Panel Styles                               */
+/* ========================================================================= */
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-panel-elevated {
+  background: rgba(17, 27, 49, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-subnav {
+  background: rgba(7, 11, 20, 0.92);
+  border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.site-footer {
+  background-color: #060910;
+  border-top: 1px solid rgba(30, 41, 59, 0.8);
+  color: #94a3b8;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.82);
+}
+
+/* Subtle glow effects */
+.glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+}
+
+.glow-violet {
+  box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.25);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070b14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* ========================================================================= */
+/* Comprehensive Light Mode Styles                                           */
+/* ========================================================================= */
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Fallback for hardcoded dark classes */
+html.light [class*="bg-[#070b14]"],
+html.light .bg-\[\#070b14\] {
+  background-color: #f8fafc !important;
+}
+
+html.light [class*="bg-[#060910]"],
+html.light .bg-\[\#060910\] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Top Navbar Header */
+html.light header.glass-panel,
+html.light header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Client Dashboard Sticky Subheader & Tabs Strip */
+html.light .dashboard-subnav {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 4px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light .dashboard-subnav .text-white {
+  color: #0f172a !important;
+}
+
+html.light .dashboard-subnav .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.light .dashboard-subnav .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .dashboard-subnav button.border-slate-800 {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html.light .dashboard-subnav button.border-slate-800:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+/* Overview tab solid pill in light mode */
+html.light .dashboard-subnav button.bg-slate-800 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Modal Backdrops */
+html.light .modal-backdrop {
+  background-color: rgba(15, 23, 42, 0.55) !important;
+}
+
+/* Glass Panels and Cards */
+html.light .glass-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light .glass-panel-elevated {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Dark Slate Boxes & Inner Cards */
+html.light .bg-slate-950,
+html.light .bg-slate-900,
+html.light .bg-slate-900\/90,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/50,
+html.light .bg-slate-900\/40,
+html.light .bg-slate-950\/80,
+html.light .bg-slate-950\/60,
+html.light .bg-slate-950\/50,
+html.light .bg-slate-950\/40 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Secondary Button Backgrounds */
+html.light .bg-slate-800,
+html.light .bg-slate-800\/80,
+html.light .bg-slate-800\/60 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html.light .bg-slate-800:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Table Row Hovers & Dividers */
+html.light tr.hover\:bg-slate-800\/30:hover,
+html.light tr.hover\:bg-slate-800\/20:hover,
+html.light div.hover\:bg-slate-800\/40:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .divide-slate-800\/60 > * {
+  border-color: #f1f5f9 !important;
+}
+
+/* Borders */
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-800\/60,
+html.light .border-slate-700,
+html.light .border-slate-700\/80,
+html.light .border-slate-700\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Text Hierarchy */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-950 {
+  color: #020617 !important;
+}
+
+/* High Contrast Accent Colors for Light Mode */
+html.light .text-cyan-300 {
+  color: #0891b2 !important;
+}
+
+html.light .text-cyan-400 {
+  color: #0284c7 !important;
+}
+
+html.light .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+html.light .text-indigo-300 {
+  color: #4338ca !important;
+}
+
+html.light .text-indigo-400 {
+  color: #4f46e5 !important;
+}
+
+html.light .text-violet-300 {
+  color: #6d28d9 !important;
+}
+
+html.light .text-violet-400 {
+  color: #7c3aed !important;
+}
+
+/* Accent Card Pills & Badges */
+html.light .bg-cyan-950\/40 {
+  background-color: #e0f2fe !important;
+  border-color: #7dd3fc !important;
+  color: #0369a1 !important;
+}
+
+html.light .bg-emerald-950\/40,
+html.light .bg-emerald-950\/60 {
+  background-color: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+  color: #047857 !important;
+}
+
+html.light .bg-violet-950\/40 {
+  background-color: #ede9fe !important;
+  border-color: #c4b5fd !important;
+  color: #6d28d9 !important;
+}
+
+html.light .bg-indigo-950\/40,
+html.light .bg-indigo-950\/60 {
+  background-color: #e0e7ff !important;
+  border-color: #a5b4fc !important;
+  color: #4338ca !important;
+}
+
+html.light .bg-amber-950\/20 {
+  background-color: #fef3c7 !important;
+  border-color: #fcd34d !important;
+}
+
+html.light .text-amber-200 {
+  color: #92400e !important;
+}
+
+html.light .text-amber-300 {
+  color: #b45309 !important;
+}
+
+html.light .text-amber-400 {
+  color: #d97706 !important;
+}
+
+/* Inputs, Selects, and Textareas */
+html.light input,
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light input:focus,
+html.light select:focus,
+html.light textarea:focus {
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Range input slider tracks */
+html.light input[type="range"] {
+  background-color: #e2e8f0 !important;
+}
+
+/* Simulated Graphic Containers & Gradients */
+html.light .bg-gradient-to-tr.from-slate-900.via-indigo-950\/40.to-slate-900 {
+  background-image: linear-gradient(to top right, #f8fafc, #e0e7ff, #f8fafc) !important;
+}
+
+html.light .bg-gradient-to-br.from-slate-900.to-slate-950 {
+  background-image: linear-gradient(to bottom right, #ffffff, #f1f5f9) !important;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* ROI Big Numbers Gradient in Light Mode */
+html.light .from-cyan-400.via-indigo-300.to-white {
+  background-image: linear-gradient(to right, #0284c7, #4f46e5, #0f172a) !important;
+}
+
+/* Site Footer in Light Mode */
+html.light .site-footer {
+  background-color: #f1f5f9 !important;
+  border-top-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html.light .site-footer .text-white {
+  color: #0f172a !important;
+}
+
+html.light .site-footer .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .site-footer .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.light .site-footer .border-slate-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Scrollbars in Light Mode */
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

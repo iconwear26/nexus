@@ -1,0 +1,428 @@
+[
+  {
+    "id": "exec-242270",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ad Budget Protector & Rebalancer",
+    "triggeredAt": "2026-10-18T10:27:22.270Z",
+    "durationMs": 382,
+    "status": "SUCCESS",
+    "triggerSource": "Dashboard Trigger",
+    "steps": [
+      {
+        "node": "Hourly Cron Monitor",
+        "type": "trigger",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Checked 3 active ad sets for fatigue"
+      },
+      {
+        "node": "Fatigue Detector",
+        "type": "transform",
+        "status": "EXECUTED",
+        "duration": 84,
+        "outputSummary": "Detected fatigue (105 waste saved)"
+      },
+      {
+        "node": "Budget Rebalancer",
+        "type": "action",
+        "status": "EXECUTED",
+        "duration": 186,
+        "outputSummary": "Shifted $105/day into top-performing ads"
+      },
+      {
+        "node": "Slack / CRM Ping",
+        "type": "notification",
+        "status": "EXECUTED",
+        "duration": 100,
+        "outputSummary": "Dispatched team alert"
+      }
+    ]
+  },
+  {
+    "id": "exec-1792255459184",
+    "workflowId": "lead_nurture_crm",
+    "workflowName": "Multi-Channel Inbound Lead Enrichment & Sub-90s Nurture",
+    "triggeredAt": "2026-10-17T16:44:19.184Z",
+    "durationMs": 489,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Website Intake Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Captured lead: Elena Vance (NovaWear Apparel) - $15k-$40k/mo."
+      },
+      {
+        "node": "Clearbit / Domain Enrichment",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 110,
+        "outputSummary": "Enriched company domain: 45 employees, DTC apparel category, $4.2M est ARR."
+      },
+      {
+        "node": "Intent Scoring Algorithm",
+        "type": "n8n-nodes-base.code",
+        "status": "EXECUTED",
+        "duration": 24,
+        "outputSummary": "Calculated score: 94/100 (Tier 1 Priority - Automated Calendar Invite)."
+      },
+      {
+        "node": "HubSpot Deal Pipeline Sync",
+        "type": "n8n-nodes-base.hubspot",
+        "status": "EXECUTED",
+        "duration": 85,
+        "outputSummary": "Created deal record & dispatched personalized calendar teardown email."
+      },
+      {
+        "node": "Telegram Rep Closer Alert",
+        "type": "n8n-nodes-base.telegram",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Dispatched real webhook to http://localhost:5678/webhook/inbound-lead"
+      }
+    ]
+  },
+  {
+    "id": "exec-1792255343857",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ads Real-Time Pacing & Fatigue Guard",
+    "triggeredAt": "2026-10-17T16:42:23.857Z",
+    "durationMs": 1002,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Cron Trigger (Interval: */15 * * * *)",
+        "type": "n8n-nodes-base.cron",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Evaluated pacing criteria across 8 active Meta adsets."
+      },
+      {
+        "node": "Meta Insights Query (Graph API v19)",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 182,
+        "outputSummary": "Parsed adset #104: frequency 3.84 (>3.5 threshold), CTR dropped 42%.",
+        "payload": {
+          "adsetId": "act_492049182_adset_104",
+          "frequency": 3.84,
+          "ctr": "0.94%"
+        }
+      },
+      {
+        "node": "Gemini Creative Angle Refresh",
+        "type": "n8n-nodes-base.googleGemini",
+        "status": "EXECUTED",
+        "duration": 145,
+        "outputSummary": "Synthesized 3 fresh angle variations for underperforming creative.",
+        "payload": {
+          "anglesCreated": 3,
+          "model": "gemini-3.8-flash"
+        }
+      },
+      {
+        "node": "Update Daily Budget Pacing",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Transferred $450/day spend to top-performing Lookalike adset (4.6x ROAS).",
+        "payload": {
+          "reallocatedAmount": "$450.00",
+          "newTargetAdSet": "adset_802_retargeting"
+        }
+      },
+      {
+        "node": "Slack Ops Dispatch",
+        "type": "n8n-nodes-base.slack",
+        "status": "EXECUTED",
+        "duration": 25,
+        "outputSummary": "Dispatched live webhook payload to http://localhost:5678/webhook/inbound-lead"
+      }
+    ]
+  },
+  {
+    "id": "exec-1792252949075",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ads Real-Time Pacing & Fatigue Guard",
+    "triggeredAt": "2026-10-17T16:02:29.075Z",
+    "durationMs": 446,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Cron Trigger (Interval: */15 * * * *)",
+        "type": "n8n-nodes-base.cron",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Evaluated pacing criteria across 8 active Meta adsets."
+      },
+      {
+        "node": "Meta Insights Query (Graph API v19)",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 182,
+        "outputSummary": "Parsed adset #104: frequency 3.84 (>3.5 threshold), CTR dropped 42%.",
+        "payload": {
+          "adsetId": "act_492049182_adset_104",
+          "frequency": 3.84,
+          "ctr": "0.94%"
+        }
+      },
+      {
+        "node": "Gemini Creative Angle Refresh",
+        "type": "n8n-nodes-base.googleGemini",
+        "status": "EXECUTED",
+        "duration": 145,
+        "outputSummary": "Synthesized 3 fresh angle variations for underperforming creative.",
+        "payload": {
+          "anglesCreated": 3,
+          "model": "gemini-3.8-flash"
+        }
+      },
+      {
+        "node": "Update Daily Budget Pacing",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Transferred $450/day spend to top-performing Lookalike adset (4.6x ROAS).",
+        "payload": {
+          "reallocatedAmount": "$450.00",
+          "newTargetAdSet": "adset_802_retargeting"
+        }
+      },
+      {
+        "node": "Slack Ops Dispatch",
+        "type": "n8n-nodes-base.slack",
+        "status": "EXECUTED",
+        "duration": 25,
+        "outputSummary": "Dispatched live webhook payload to http://localhost:5678/webhook/inbound-lead"
+      }
+    ]
+  },
+  {
+    "id": "exec-1792171226591",
+    "workflowId": "seo_instant_index",
+    "workflowName": "Programmatic SEO Audit & Google Indexing Push",
+    "triggeredAt": "2026-10-16T17:20:26.591Z",
+    "durationMs": 451,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/seo-index-push",
+    "steps": [
+      {
+        "node": "Webhook Listener (Slug Publication)",
+        "type": "n8n-nodes-base.webhook",
+        "status": "EXECUTED",
+        "duration": 15,
+        "outputSummary": "Captured new programmatic URL slug: https://growthengine.io/solutions/ecommerce-automation"
+      },
+      {
+        "node": "Lighthouse & Schema Validator",
+        "type": "n8n-nodes-base.code",
+        "status": "EXECUTED",
+        "duration": 98,
+        "outputSummary": "Schema verification passed: Organization & Article JSON-LD verified."
+      },
+      {
+        "node": "Google Indexing API v3 Push",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 185,
+        "outputSummary": "POST to https://indexing.googleapis.com/v3/urlNotifications:publish -> HTTP 200 OK."
+      },
+      {
+        "node": "Log to Google Sheets / Telemetry DB",
+        "type": "n8n-nodes-base.googleSheets",
+        "status": "EXECUTED",
+        "duration": 38,
+        "outputSummary": "Logged indexed URL with Googlebot dispatch timestamp."
+      }
+    ]
+  },
+  {
+    "id": "exec-1792168740371",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ads Real-Time Pacing & Fatigue Guard",
+    "triggeredAt": "2026-10-16T16:39:00.372Z",
+    "durationMs": 454,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Cron Trigger (Interval: */15 * * * *)",
+        "type": "n8n-nodes-base.cron",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Evaluated pacing criteria across 8 active Meta adsets."
+      },
+      {
+        "node": "Meta Insights Query (Graph API v19)",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 182,
+        "outputSummary": "Parsed adset #104: frequency 3.84 (>3.5 threshold), CTR dropped 42%.",
+        "payload": {
+          "adsetId": "act_492049182_adset_104",
+          "frequency": 3.84,
+          "ctr": "0.94%"
+        }
+      },
+      {
+        "node": "Gemini Creative Angle Refresh",
+        "type": "n8n-nodes-base.googleGemini",
+        "status": "EXECUTED",
+        "duration": 145,
+        "outputSummary": "Synthesized 3 fresh angle variations for underperforming creative.",
+        "payload": {
+          "anglesCreated": 3,
+          "model": "gemini-3.8-flash"
+        }
+      },
+      {
+        "node": "Update Daily Budget Pacing",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Transferred $450/day spend to top-performing Lookalike adset (4.6x ROAS).",
+        "payload": {
+          "reallocatedAmount": "$450.00",
+          "newTargetAdSet": "adset_802_retargeting"
+        }
+      },
+      {
+        "node": "Slack Ops Dispatch",
+        "type": "n8n-nodes-base.slack",
+        "status": "EXECUTED",
+        "duration": 25,
+        "outputSummary": "Dispatched live webhook payload to http://localhost:5678/webhook/inbound-lead"
+      }
+    ]
+  },
+  {
+    "id": "exec-1792166525277",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ads Real-Time Pacing & Fatigue Guard",
+    "triggeredAt": "2026-10-16T16:02:05.277Z",
+    "durationMs": 755,
+    "status": "SUCCESS",
+    "triggerSource": "NexusFlow Simulation Engine",
+    "webhookUrlDispatched": "http://localhost:5678/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Cron Trigger (Interval: */15 * * * *)",
+        "type": "n8n-nodes-base.cron",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Evaluated pacing criteria across 8 active Meta adsets."
+      },
+      {
+        "node": "Meta Insights Query (Graph API v19)",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 182,
+        "outputSummary": "Parsed adset #104: frequency 3.84 (>3.5 threshold), CTR dropped 42%.",
+        "payload": {
+          "adsetId": "act_492049182_adset_104",
+          "frequency": 3.84,
+          "ctr": "0.94%"
+        }
+      },
+      {
+        "node": "Gemini Creative Angle Refresh",
+        "type": "n8n-nodes-base.googleGemini",
+        "status": "EXECUTED",
+        "duration": 145,
+        "outputSummary": "Synthesized 3 fresh angle variations for underperforming creative.",
+        "payload": {
+          "anglesCreated": 3,
+          "model": "gemini-3.8-flash"
+        }
+      },
+      {
+        "node": "Update Daily Budget Pacing",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Transferred $450/day spend to top-performing Lookalike adset (4.6x ROAS).",
+        "payload": {
+          "reallocatedAmount": "$450.00",
+          "newTargetAdSet": "adset_802_retargeting"
+        }
+      },
+      {
+        "node": "Slack Ops Dispatch",
+        "type": "n8n-nodes-base.slack",
+        "status": "EXECUTED",
+        "duration": 25,
+        "outputSummary": "Dispatched internal media buyer alert."
+      }
+    ]
+  },
+  {
+    "id": "exec-1792165292202",
+    "workflowId": "meta_ads_pacing",
+    "workflowName": "Meta Ads Real-Time Pacing & Fatigue Guard",
+    "triggeredAt": "2026-10-16T15:41:32.202Z",
+    "durationMs": 2725,
+    "status": "SUCCESS",
+    "triggerSource": "Live n8n Webhook Relay",
+    "webhookUrlDispatched": "https://n8n.nexusflow.agency/webhook/inbound-lead",
+    "steps": [
+      {
+        "node": "Cron Trigger (Interval: */15 * * * *)",
+        "type": "n8n-nodes-base.cron",
+        "status": "EXECUTED",
+        "duration": 12,
+        "outputSummary": "Evaluated pacing criteria across 8 active Meta adsets."
+      },
+      {
+        "node": "Meta Insights Query (Graph API v19)",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 182,
+        "outputSummary": "Parsed adset #104: frequency 3.84 (>3.5 threshold), CTR dropped 42%.",
+        "payload": {
+          "adsetId": "act_492049182_adset_104",
+          "frequency": 3.84,
+          "ctr": "0.94%"
+        }
+      },
+      {
+        "node": "Gemini Creative Angle Refresh",
+        "type": "n8n-nodes-base.googleGemini",
+        "status": "EXECUTED",
+        "duration": 145,
+        "outputSummary": "Synthesized 3 fresh angle variations for underperforming creative.",
+        "payload": {
+          "anglesCreated": 3,
+          "model": "gemini-3.8-flash"
+        }
+      },
+      {
+        "node": "Update Daily Budget Pacing",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "EXECUTED",
+        "duration": 45,
+        "outputSummary": "Transferred $450/day spend to top-performing Lookalike adset (4.6x ROAS).",
+        "payload": {
+          "reallocatedAmount": "$450.00",
+          "newTargetAdSet": "adset_802_retargeting"
+        }
+      },
+      {
+        "node": "Slack Ops Dispatch",
+        "type": "n8n-nodes-base.slack",
+        "status": "EXECUTED",
+        "duration": 25,
+        "outputSummary": "Dispatched live webhook payload to https://n8n.nexusflow.agency/webhook/inbound-lead"
+      }
+    ]
+  }
+]

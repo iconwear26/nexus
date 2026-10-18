@@ -1,0 +1,8 @@
+{
+  "name": "NexusFlow - Marketing & n8n Automation",
+  "description": "Full-stack marketing agency platform and interactive n8n client automation command center for Meta Ads, SEO indexing, Instagram publishing, and lead pipelines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

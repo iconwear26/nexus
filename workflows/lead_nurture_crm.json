@@ -1,0 +1,96 @@
+{
+  "name": "NexusFlow - Multi-Channel Lead Enrichment & Sub-90s Nurture",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "inbound-lead",
+        "responseMode": "onReceived",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "id": "c1d2e3f4-1111-4000-8000-000000000001",
+      "name": "Inbound Website Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "inbound-lead"
+    },
+    {
+      "parameters": {
+        "url": "=https://person.clearbit.com/v2/combined/find?email={{ $json.body.email }}",
+        "options": {}
+      },
+      "continueOnFail": true,
+      "id": "c1d2e3f4-2222-4000-8000-000000000002",
+      "name": "Enrich Company & Persona Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $node['Inbound Website Lead Webhook'].json.body || {};\nconst enrichment = $input.first().json || {};\n\nlet score = 50;\n\n// Score on Budget\nif (body.budget && (body.budget.includes('40,000') || body.budget.includes('100,000'))) {\n  score += 30;\n} else if (body.budget && body.budget.includes('15,000')) {\n  score += 20;\n} else {\n  score += 10;\n}\n\n// Score on Company Domain\nconst domain = body.website || (body.email ? body.email.split('@')[1] : '');\nif (domain && !domain.includes('gmail') && !domain.includes('yahoo')) {\n  score += 15;\n}\n\nscore = Math.min(score, 99);\n\nreturn [{\n  json: {\n    leadId: `lead_${Date.now()}`,\n    name: body.name || 'Anonymous Prospect',\n    email: body.email || 'lead@domain.com',\n    company: body.company || enrichment.company?.name || 'Self-Employed',\n    website: body.website || enrichment.company?.domain || 'N/A',\n    budget: body.budget || '$10,000+',\n    services: body.services || ['full_suite'],\n    leadScore: score,\n    isHighPriority: score >= 80,\n    submittedAt: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "c1d2e3f4-3333-4000-8000-000000000003",
+      "name": "Compute Predictive Intent Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"properties\": {\n    \"email\": $json.email,\n    \"firstname\": $json.name.split(' ')[0],\n    \"company\": $json.company,\n    \"lead_score\": $json.leadScore\n  }\n}"
+      },
+      "continueOnFail": true,
+      "id": "c1d2e3f4-4444-4000-8000-000000000004",
+      "name": "Sync Contact to CRM (HubSpot)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": \"{{ $env.TELEGRAM_GROWTH_CHAT_ID }}\",\n  \"text\": \"🎯 *New Qualified Prospect Inbound!*\\nName: *\" + $node['Compute Predictive Intent Score'].json.name + \"*\\nCompany: \" + $node['Compute Predictive Intent Score'].json.company + \"\\nIntent Score: \" + $node['Compute Predictive Intent Score'].json.leadScore + \"/100 (Tier 1)\"\n}"
+      },
+      "continueOnFail": true,
+      "id": "c1d2e3f4-5555-4000-8000-000000000005",
+      "name": "Telegram Urgent Alert to Closers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Inbound Website Lead Webhook": {
+      "main": [
+        [{ "node": "Enrich Company & Persona Data", "type": "main", "index": 0 }]
+      ]
+    },
+    "Enrich Company & Persona Data": {
+      "main": [
+        [{ "node": "Compute Predictive Intent Score", "type": "main", "index": 0 }]
+      ]
+    },
+    "Compute Predictive Intent Score": {
+      "main": [
+        [{ "node": "Sync Contact to CRM (HubSpot)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Sync Contact to CRM (HubSpot)": {
+      "main": [
+        [{ "node": "Telegram Urgent Alert to Closers", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" }
+}

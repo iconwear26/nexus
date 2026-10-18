@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AutomationWorkflow, WorkflowNode } from '../types';
 import { WORKFLOWS_DATA } from '../data/mockWorkflows';
-import { Play, CheckCircle2, Clock, Terminal, ChevronRight, X, Cpu, Layers, Sparkles, Send, Database, Search, Instagram, Users, Download, Globe } from 'lucide-react';
+import { Play, CheckCircle2, Clock, Terminal, ChevronRight, ArrowRight, X, Cpu, Layers, Sparkles, Send, Database, Search, Instagram, Users, Download, Globe } from 'lucide-react';
 
 export const InteractiveWorkflowCanvas: React.FC = () => {
   const [selectedWorkflowId, setSelectedWorkflowId] = useState<string>('meta_ads_pacing');
@@ -199,8 +199,14 @@ export const InteractiveWorkflowCanvas: React.FC = () => {
           </div>
         </div>
 
+        {/* Mobile Swipe Hint */}
+        <div className="md:hidden text-center text-[11px] text-slate-400 mb-2 flex items-center justify-center gap-1.5">
+          <ArrowRight className="w-3 h-3 text-cyan-400" />
+          <span>Swipe horizontally to view full workflow pipeline</span>
+        </div>
+
         {/* Interactive n8n Node Topology Canvas */}
-        <div className="relative glass-panel-elevated rounded-2xl p-6 sm:p-10 overflow-x-auto border-slate-800">
+        <div className="relative glass-panel-elevated rounded-2xl p-4 sm:p-6 md:p-10 overflow-x-auto border-slate-800">
           {/* Simulation Success Banner */}
           {executionResult && (
             <div className="mb-8 p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-between animate-fadeIn">

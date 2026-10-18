@@ -633,25 +633,25 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="text-xs text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors flex items-center gap-1.5"
+              className="text-xs text-slate-300 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors flex items-center gap-1.5"
             >
-              <Settings className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Connection Settings</span>
+              <Settings className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+              <span><span className="hidden sm:inline">Connection </span>Settings</span>
             </button>
             <button
               onClick={onSwitchToMarketing}
-              className="text-xs text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors"
+              className="text-xs text-slate-300 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 transition-colors"
             >
-              Back to Home
+              <span><span className="hidden sm:inline">Back to </span>Home</span>
             </button>
             <button
               onClick={onOpenAuditModal}
-              className="px-3.5 py-1.5 text-xs font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-lg transition-colors flex items-center gap-1.5"
+              className="px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-lg transition-colors flex items-center gap-1.5 shrink-0"
             >
-              <span>Schedule Consultation</span>
+              <span><span className="hidden sm:inline">Schedule </span>Consultation</span>
             </button>
           </div>
         </div>
@@ -660,7 +660,7 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 overflow-x-auto py-2">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-2 ${
               activeTab === 'overview'
                 ? 'bg-slate-800 text-white border border-slate-700 font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
@@ -671,49 +671,49 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({
 
           <button
             onClick={() => setActiveTab('meta_ads')}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-2 ${
               activeTab === 'meta_ads'
                 ? 'bg-cyan-950/40 text-cyan-300 border border-cyan-500/40 font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Target className="w-3.5 h-3.5 text-cyan-400" />
+            <Target className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span>Ad Optimizer</span>
           </button>
 
           <button
             onClick={() => setActiveTab('seo')}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-2 ${
               activeTab === 'seo'
                 ? 'bg-indigo-950/40 text-indigo-300 border border-indigo-500/40 font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Search className="w-3.5 h-3.5 text-indigo-400" />
+            <Search className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
             <span>Google SEO Checker</span>
           </button>
 
           <button
             onClick={() => setActiveTab('instagram')}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-2 ${
               activeTab === 'instagram'
                 ? 'bg-violet-950/40 text-violet-300 border border-violet-500/40 font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Instagram className="w-3.5 h-3.5 text-violet-400" />
+            <Instagram className="w-3.5 h-3.5 text-violet-400 shrink-0" />
             <span>Social Post Creator</span>
           </button>
 
           <button
             onClick={() => setActiveTab('lead_nurture')}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 ${
+            className={`px-3.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-2 ${
               activeTab === 'lead_nurture'
                 ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-500/40 font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Users className="w-3.5 h-3.5 text-emerald-400" />
+            <Users className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span>New Leads & CRM</span>
           </button>
         </div>

@@ -42,10 +42,10 @@ export const AgencyHero: React.FC<AgencyHeroProps> = ({
             </p>
 
             {/* CTA Block */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
               <button
                 onClick={onOpenAuditModal}
-                className="px-6 py-3.5 text-sm font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-white rounded-lg transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2 whitespace-nowrap hover:scale-[1.02] active:scale-[0.98]"
+                className="px-6 py-3.5 text-sm font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-white rounded-lg transition-all shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
               >
                 <span>Get Your Free Growth Plan</span>
                 <ArrowRight className="w-4 h-4" />
@@ -53,7 +53,7 @@ export const AgencyHero: React.FC<AgencyHeroProps> = ({
 
               <button
                 onClick={onOpenDashboard}
-                className="px-5 py-3.5 text-sm font-medium text-slate-200 glass-panel hover:bg-slate-800/90 hover:text-white rounded-lg transition-all border border-slate-700/80 flex items-center gap-2 whitespace-nowrap"
+                className="px-5 py-3.5 text-sm font-medium text-slate-200 glass-panel hover:bg-slate-800/90 hover:text-white rounded-lg transition-all border border-slate-700/80 flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto"
               >
                 <Cpu className="w-4 h-4 text-cyan-400" />
                 <span>Try Live Dashboard Demo</span>

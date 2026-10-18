@@ -66,7 +66,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'light' ? 'bg-[#f8fafc] text-slate-900' : 'bg-[#070b14] text-slate-100'} flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-300 transition-colors duration-200`}>
+    <div className={`min-h-screen w-full overflow-x-hidden ${theme === 'light' ? 'bg-[#f8fafc] text-slate-900' : 'bg-[#070b14] text-slate-100'} flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-300 transition-colors duration-200`}>
       {/* Top Bar Navigation */}
       <Navbar
         currentView={currentView}

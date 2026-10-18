@@ -23,11 +23,11 @@ export const AgencyHero: React.FC<AgencyHeroProps> = ({
           {/* Left Column (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             {/* Friendly text kicker */}
-            <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-slate-400">
               <span className="text-cyan-400 uppercase tracking-wider font-semibold">
                 All-In-One Growth Engine
               </span>
-              <span aria-hidden="true" className="text-slate-600">·</span>
+              <span aria-hidden="true" className="text-slate-600 hidden xs:inline">·</span>
               <span>Hands-Free Marketing Automation</span>
             </div>
 

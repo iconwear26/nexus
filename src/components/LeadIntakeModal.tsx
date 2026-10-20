@@ -50,6 +50,9 @@ export const LeadIntakeModal: React.FC<LeadIntakeModalProps> = ({
       const data = await res.json();
       if (data.success) {
         setSuccessResult(data);
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead', { content_name: 'Growth Plan Consultation', currency: 'USD' });
+        }
       }
     } catch (err) {
       console.error('Lead submission failed:', err);
